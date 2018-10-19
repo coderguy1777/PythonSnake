@@ -2,11 +2,8 @@ import random
 import curses
 
 s = curses.initscr()
-curses.cur_set(0)
 sh, sw = s.getmaxyx()
 w = curses.newwin(sh, sw, 0, 0)
-
-w.keypad(1)
 w.timeout(100)
 
 snk_x = sw/4
@@ -21,11 +18,11 @@ snake = [
 food = [sh/2, sw/2]
 w.addch(food[0], food[1], curses.ACS_PI)
 
-key = curses.key_RIGHT
+KEY = curses.KEY_RIGHT
 
 while True:
-    next_key = w.getch()
-    key = key if next_key == -1 else next_key
+    next_KEY = w.getch()
+    KEY = KEY if next_KEY == -1 else next_KEY
 
     if snake[0][0] in [0, sh] or snake[0][1] in [0, sw] in snake[1:]:
         curses.endwin()
@@ -34,13 +31,13 @@ while True:
     new_head = [snake[0][0], snake[0][1]]
 
 
-    if key == curses.KEY_DOWN:
+    if KEY == curses.KEY_DOWN:
          new_head[0] += 1
-    if key == curses.KEY_UP:
+    if KEY == curses.KEY_UP:
          new_head[0] -= 1
-    if key == curses.KEY_LEFT:
+    if KEY == curses.KEY_LEFT:
          new_head[1] -= 1
-    if key == curses.KEY_RIGHT:
+    if KEY == curses.KEY_RIGHT:
          new_head[1] += 1
 
     snake.insert(0, new_head)
@@ -57,6 +54,4 @@ while True:
     else:
         tail = snake.pop()
         w.addch(tail[0], tail[1], ' ')
-
-
-    w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
+        w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
